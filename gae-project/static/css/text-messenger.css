@@ -1,0 +1,215 @@
+.container, .mdl-grid {
+  width: 95%;
+}
+
+@media ( min-width : 1200px) {
+  .container:not(.fluid),
+  .mdl-grid:not(.fluid) {
+    width: 1152px;
+  }
+  .container.fab-width-container {
+    position: absolute;
+    left: 50%;
+    margin-left: -576px;
+  }
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.container:before, .container:after {
+  content: " ";
+  display: table;
+}
+
+.container:after {
+  clear: both;
+}
+
+.step-circle {
+  font: 42px arial, sans-serif;
+  color: white;
+  top: 7px;
+  left: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.important-instruction {
+  font-weight: bold;
+  color: #800000;
+  font-size: 1.2em;
+}
+
+.page-title {
+  
+}
+
+.header-fab {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 999;
+}
+
+
+/* Cards copy paste from Square card https://getmdl.io/components/index.html#cards-section */
+.mdl-card__title {
+  color: #fff;
+  background: bottom right 15% no-repeat #089889;
+  /* color from this grid http://paletton.com/#uid=13f0u0kw0osmUvmuhuGCbjZKZeE */
+}
+
+.mdl-card {
+  width: initial; /* Use the grid system to set the width of the cards */
+}
+
+.contact-card .mdl-card .mdl-card__supporting-text {
+  margin: 20px;
+  width: calc(100% - 40px);
+}
+
+.contact-card .mdl-card {
+  min-height: 172px;
+}
+
+.concise-contact-card .mdl-card {
+  min-height: 0px;
+}
+
+.concise-contact-card .mdl-card .mdl-card__supporting-text {
+  margin: 10px 20px;
+  width: calc(100% - 40px);
+}
+
+.delete-contact-btn {
+  margin: 8px;
+}
+
+.delete-btn {
+  background: #d00000;
+  color: white;
+  float: left;
+}
+
+#remove-img-btn {
+  background: #d00000;
+  color: white;
+}
+
+.mdl-button.delete-btn:hover, .mdl-button.delete-btn:active, .mdl-button.delete-btn:focus {
+  background: #a00000;
+}
+
+.mdl-textfield {
+  width: 100% !important;
+}
+
+dialog.mdl-dialog {
+  width: 400px !important;
+  max-width: 90%;
+}
+
+.list-buttons {
+  text-align: right;
+}
+
+#save-list-btn {
+  width: 96px; /* to matach default Back button size. */
+  margin-left: 10px;
+}
+
+.moved-contact>.mdl-card {
+  background-color: rgba(255, 255, 0, 0.25)
+}
+
+.text-message-table {
+  width: 100%;
+}
+
+.text-message-table thead {
+  background-color: #e0e0e0;
+}
+
+section.create-message-card {
+  margin-bottom: 15px !important;
+}
+
+.create-message-page.mdl-layout__tab-panel {
+  padding-top: 12px !important;
+}
+
+#image-attachment {
+  text-align: center;
+}
+
+#send-btn-wrapper {
+  max-width: 860px;
+  text-align: right;
+  margin: auto;
+}
+
+#send-btn {
+  margin-right: 18px;
+}
+@media ( min-width : 934px) {
+  #send-btn {
+    margin-right: 0;
+  }
+}
+
+.account-info-form-buttons {
+  padding: 0 30px 20px 30px;
+  text-align: right;
+}
+
+/* From http://stackoverflow.com/questions/31360070/material-design-lite-grid-with-tables */
+.mdl-data-table {
+    table-layout:fixed;
+    width:100%; 
+}
+
+.text-message-table td,
+.text-message-table th {
+  width: 25%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+
+.text-message-table .text-message-event-body {
+  width: 50%; /* Double the default on mobile */
+}
+
+.text-message-table .text-message-event-media {
+  width: 0;  /* Hide the send time on mobile. */
+}
+
+.text-message-table .text-message-event-media a i {
+  color: #616161;
+}
+
+.text-message-table .text-message-event-actions {
+  width: 95px;
+}
+
+.text-message-table .text-message-event-send-time {
+  width: 0;  /* Hide the send time on mobile. */
+}
+
+@media ( min-width : 700px) {
+  .text-message-table .text-message-event-body {
+    width: 100%; /* 4x the default on big screens */
+  }
+  .text-message-table .text-message-event-send-time {
+    width: 170px;
+  }
+  .text-message-table .text-message-event-media {
+    width: 70px;
+  }
+}

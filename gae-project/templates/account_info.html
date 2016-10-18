@@ -1,0 +1,66 @@
+{% extends "templates/base_page.html" %} {% block setActive %}
+<script>
+  $("a.mdl-layout__tab[href='/account-info']").addClass("is-active");
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="page-title">Account Info</h2>
+  <div class="mdl-layout__tab-panel is-active" id="overview">
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+      <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <form class="form-horizontal" action="/account-info-action" method="POST">
+          <div class="mdl-card__supporting-text">
+            <div id="twilio-sid-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="twilio_sid" value="{{account_info.twilio_sid}}">
+              <label class="mdl-textfield__label" for="twilio_sid">Twilio Account SID</label>
+            </div>
+            <br>
+            <div id="twilio-auth-token-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="twilio_auth_token"
+                value="{{account_info.twilio_auth_token}}"> <label class="mdl-textfield__label"
+                for="twilio_auth_token">Twilio Auth Token</label>
+            </div>
+            <br>
+            <div id="twilio-phone-number-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="twilio_phone_number"
+                value="{{account_info.twilio_phone_number}}"> <label class="mdl-textfield__label"
+                for="twilio_phone_number">Twilio Phone Number</label>
+            </div>
+            <div id="auto-response-voice-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="auto_response_voice"
+                value="{{account_info.auto_response_voice}}"> <label class="mdl-textfield__label"
+                for="auto_response_voice">Automatic response to Phone Calls made to this number (requires setup, see HOME)</label>
+            </div>
+            <div id="auto-response-sms-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="auto_response_sms"
+                value="{{account_info.auto_response_sms}}"> <label class="mdl-textfield__label"
+                for="auto_response_sms">Automatic response to SMS Messages sent to this number (requires setup, see HOME)</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+              <input class="mdl-textfield__input" value="{{account_info.time_zone}}" type="text" id="time_zone" name="time_zone" tabIndex="-1" data-val="{{account_info.time_zone}}"/>
+              <label class="mdl-textfield__label" for="time_zone">Select a Time Zone</label>
+              <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="time_zone">
+                {% for zone in timezones %}
+                  <li class="mdl-menu__item" data-val="{{zone}}">{{zone}}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div id="signature-text-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" name="signature_text"
+                value="{{account_info.signature_text}}"> <label class="mdl-textfield__label"
+                for="signature_text">Custom signature text to replace the word SIG in messages (optional)</label>
+            </div>
+          </div>
+          <br>
+          <div class="account-info-form-buttons">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Cancel</button>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Save</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+</div>
+{% endblock %}

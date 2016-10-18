@@ -1,0 +1,33 @@
+{% if text_message_list %} <h6>{{ title }}</h6>
+<table class="text-message-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+	<thead>
+		<tr>
+			<th class="mdl-data-table__cell--non-numeric">To</th>
+			<th class="text-message-event-media">Image</th>
+			<th class="text-message-event-body mdl-data-table__cell--non-numeric">Body</th>
+			<th class="text-message-event-send-time">Send time</th>
+			<th class="text-message-event-actions">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for text_message_event in text_message_list %}
+		<tr>
+			<td class="mdl-data-table__cell--non-numeric">{{ text_message_event|recipient_format }}</td>
+			<td class="text-message-event-media"> {% if text_message_event.media_blob_key %} <a href="/img/{{text_message_event.media_blob_key}}"> <i class="material-icons">image</i> </a> {% endif %} </td>
+			<td class="text-message-event-body mdl-data-table__cell--non-numeric">{{ text_message_event.message_body }}</td>
+			<td class="text-message-event-send-time">{{ text_message_event.send_datetime|date_time_display_format(account_info.time_zone) }}</td>
+			<td class="text-message-event-actions"><a href="/create-message?{% if isEditable %}edit{% else %}duplicate{% endif %}={{ text_message_event.key.urlsafe() }}" class="mdl-button mdl-js-button mdl-button--icon"> <i class="material-icons">{% if isEditable %}edit{% else %}content_copy{% endif %}</i> </a>
+			<button type="button" class="delete-text-message-event-btn mdl-button mdl-js-button mdl-button--icon">
+				<div class="hidden message-body-for-delete">
+					{{ text_message_event.message_body }}
+				</div>
+				<div class="hidden entity-key-for-delete">
+					{{ text_message_event.key.urlsafe() }}
+				</div>
+				<i class="material-icons">delete</i>
+			</button></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}

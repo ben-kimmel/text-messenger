@@ -1,0 +1,16 @@
+
+<div class="list-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+	<div class="entity-key" style="display: none;">{{list.key.urlsafe()}}</div>
+	<div class="mdl-card mdl-shadow--2dp">
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">{{ list.name }}</h2>
+      <div class="mdl-layout-spacer"></div>
+      <button class="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
+        <i class="material-icons">edit</i>
+      </button>
+		</div>
+		<div class="mdl-card__supporting-text">
+		{{ list_contacts_map[list.key.urlsafe()] }}
+		</div>
+	</div>
+</div>

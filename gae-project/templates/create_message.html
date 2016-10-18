@@ -1,0 +1,156 @@
+{% extends "templates/base_page.html" %}
+
+{% block content %}
+<div class="create-message-page mdl-layout__tab-panel is-active" id="overview">
+	<form id="create-text-message-event-form" action="{{ form_action }}" method="POST" enctype="multipart/form-data">
+		{% if text_message_event and is_edit %}
+		<input type="hidden" name="urlsafe_text_message_event_key" value="{{text_message_event.key.urlsafe()}}">
+		{% endif %}
+		<section class="create-message-card section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+			<div class="mdl-card mdl-cell mdl-cell--12-col">
+				<div class="mdl-card__supporting-text">
+					<h4>Send time:</h4>
+					<div class="mdl-grid fluid">
+						<div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--3-col-phone">
+							<label class="mdl-radio mdl-js-radio" for="scheduled-radio">
+								<input type="radio" value="scheduled" id="scheduled-radio" name="when_radio_group" class="mdl-radio__button" checked>
+								<span class="mdl-radio__label">Schedule a delivery time</span> </label>
+						</div>
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--1-col-phone">
+							<label class="mdl-radio mdl-js-radio" for="now-radio">
+								<input type="radio" value="now" id="now-radio" name="when_radio_group" class="mdl-radio__button">
+								<span class="mdl-radio__label">Send now</span> </label>
+						</div>
+					</div>
+					<div class="scheduled-picker">
+						<div id="send-date-time-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" name="send_date_time"
+							{% if text_message_event %}value="{{ text_message_event.send_datetime|date_time_input_format(account_info.time_zone) }}"{% endif %}>
+							<label class="mdl-textfield__label" for="send_date_time">Delivery date / time</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="create-message-card section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+			<div class="mdl-card mdl-cell mdl-cell--12-col">
+				<div class="mdl-card__supporting-text">
+					<h4>To:</h4>
+					<div class="mdl-grid fluid">
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+							<label class="mdl-radio mdl-js-radio" for="list-radio">
+								<input type="radio" value="list" id="list-radio" name="to_radio_group" class="mdl-radio__button"
+								{% if text_message_event %}
+								{% if text_message_event.recipient_type == text_message_event.RecipientType.LIST %}
+								checked
+								{% endif %}
+								{% else %}
+								checked
+								{% endif %}>
+								<span class="mdl-radio__label">A List</span> </label>
+						</div>
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+							<label class="mdl-radio mdl-js-radio" for="individual-radio">
+								<input type="radio" value="individual" id="individual-radio" name="to_radio_group" class="mdl-radio__button"
+								{% if text_message_event and text_message_event.recipient_type == text_message_event.RecipientType.INDIVIDUAL %}
+								checked
+								{% endif %}>
+								<span class="mdl-radio__label">An Individual</span> </label>
+						</div>
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+							<label class="mdl-radio mdl-js-radio" for="all-radio">
+								<input type="radio" value="all" id="all-radio" name="to_radio_group" class="mdl-radio__button"
+								{% if text_message_event and text_message_event.recipient_type == text_message_event.RecipientType.ALL %}
+								checked
+								{% endif %}>
+								<span class="mdl-radio__label">All Contacts</span> </label>
+						</div>
+					</div>
+					<div
+					{% if text_message_event and text_message_event.recipient_type != text_message_event.RecipientType.LIST %}
+					style="display: none;"
+					{% endif %}
+					id="list-select" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+						<input class="mdl-textfield__input" type="text" id="to_list" name="to_list" tabIndex="-1"
+						{% if text_message_event and text_message_event.recipient_type == text_message_event.RecipientType.LIST %}
+						value="{{text_message_event_list_name}}"
+						data-val="{{text_message_event.recipient_list_key.urlsafe()}}"
+						{% endif %}
+						/>
+						<label class="mdl-textfield__label" for="to_list">Choose a list</label>
+						<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="to_list">
+							{% for contact_list in contact_lists %}
+							<li class="mdl-menu__item" data-val="{{contact_list.key.urlsafe()}}">
+								{{ contact_list.name }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div
+					{% if not text_message_event or text_message_event.recipient_type != text_message_event.RecipientType.INDIVIDUAL %}
+					style="display: none;"
+					{% endif %}
+					id="individual-contact-select" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+						<input class="mdl-textfield__input" type="text" id="to_individual" name="to_individual" tabIndex="-1"
+						{% if text_message_event and text_message_event.recipient_type == text_message_event.RecipientType.INDIVIDUAL %}
+						value="{{text_message_event_individual_name}}"
+						data-val="{{text_message_event.recipient_contact_key.urlsafe()}}"
+						{% endif %}
+						/>
+						<label class="mdl-textfield__label" for="to_individual">Choose an individual</label>
+						<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="to_individual">
+							{% for contact in contacts %}
+							<li class="mdl-menu__item" data-val="{{contact.key.urlsafe()}}">
+								{{ contact.display_nickname_and_name() }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="create-message-card section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+			<div class="mdl-card mdl-cell mdl-cell--12-col">
+				<div class="mdl-card__supporting-text">
+					<h4>Message body:</h4>
+					<div id="message-body-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" name="message_body"
+						{% if text_message_event %}value="{{ text_message_event.message_body }}"{% endif %}>
+						<label class="mdl-textfield__label" for="message_body"> Type the body of your message </label>
+					</div>
+					<div id="image-attachment">
+						{% set has_img = text_message_event and text_message_event.media_blob_key %}
+						{% if has_img %}
+						<div id="current-img">
+							<input type="hidden" name="original_blob_key" value={{text_message_event.media_blob_key}}>
+							<img src="/img/{{text_message_event.media_blob_key}}" alt="image" height="240" border="1">
+							<br>
+							<br>
+						</div>
+						{% endif %}
+						<input id="img-input" type="file" name="image_attachment" class="hidden2">
+						<button id="attach-img-btn" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+							{% if has_img %}Change{% else %}Attach{% endif %} image
+						</button>
+						{% if has_img %}
+						<button id="remove-img-btn" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+							Remove image
+						</button>
+						{% endif %}
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<div id="send-btn-wrapper">
+			<button id="send-btn" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+				{% if is_edit %}Update{% else %}Schedule{% endif %}
+			</button>
+		</div>
+	</form>
+</div>
+<div id="snackbar-container" class="mdl-js-snackbar mdl-snackbar">
+	<div class="mdl-snackbar__text"></div>
+	<button class="mdl-snackbar__action" type="button"></button>
+</div>
+{% endblock %}

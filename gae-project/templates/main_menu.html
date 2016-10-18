@@ -1,0 +1,200 @@
+{% extends "templates/base_page.html" %}
+
+{% block setActive %}
+<script>
+$("a.mdl-layout__tab[href='/']").addClass("is-active");
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="mdl-layout__tab-panel is-active" id="overview">
+	<section
+		class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>General info</h4>
+				<p>
+          This app is meant to be a fun playground for making
+          <b>your own</b> super awesome text messenger tool using Twilio. The goal is to show you how to integrate text
+          messsage communicaiton into your projects, if you have interest, how to schedule events, and how to use
+          features like cron jobs and task queues.
+        </p>
+        <p>
+          Twilio is a cloud communications 'Platform as a Service' (PaaS) that helps make the jump from web apps to
+          phone communications (text messages and phone calls) easier. It's fun to learn the basics then add your own
+          fun features. In order to use this app you need to make an account on Twilio. You'll
+          need to invest $5 into your Twilio account.
+        </p>
+        <p>** Update **  Twilio now has a Free Trial program, so you can test without putting in any funds!</p>
+        <p>Use the link below to create an account with Twillio, then come back to this page for the next steps (listed below).</p>
+			</div>
+			<div class="mdl-card__actions">
+				<a href="https://www.twilio.com/" target="_blank" class="mdl-button">Create
+					an account on Twilio</a>
+			</div>
+		</div>
+	</section>
+
+	<section
+		class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+				<h4 class="mdl-cell mdl-cell--12-col">Getting your Twilio
+					account setup</h4>
+        <p>** Update **  Twilio now has a Free Trial program, so you can test without putting in any funds!  You will still need
+        to do step #3 below, but you can just follow the Twilio Get Started links to click "Get your first Twilio phone number".
+        The Free Trial will give you a phone number fo free now!</p>
+        <div
+					class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+					<div class="section__circle-container__circle mdl-color--primary">
+						<span class="step-circle">1</span>
+					</div>
+				</div>
+				<div
+					class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <h5>Adding $5 to your Twilio balance</h5>
+					<p>
+						You should've made your account with Twilio from the step above,
+						now you need to visit your Twilio console <a
+							href="https://www.twilio.com/console" target="_blank">https://www.twilio.com/console</a>
+						and add $5 to your account. Use the Billing Tab (upper left), then
+						select Add Funds. The min you can add is $5 which should be enough
+						for this demo. I recommend you use Paypal (set up a Paypal account
+						if needed, you'll be glad you did). If you continue to use the app
+						you may want to add more than $5, but $5 will get you about 4
+						months worth of playing with Twilio.
+					</p>
+				</div>
+				<div
+					class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+					<div class="section__circle-container__circle mdl-color--primary">
+						<span class="step-circle">2</span>
+					</div>
+				</div>
+				<div
+					class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+					<h5>Buy a Twilio number</h5>
+					<p>On the Twilio console click on the Dashboard (upper left)
+						and find where it says "Buy a Number". Click it and select your
+						very own phone number. It costs $1 per month to own this number,
+						which is why $5 will last you about 4 months. You will need that
+						number in the next step.
+				</div>
+				<div
+					class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+					<div class="section__circle-container__circle mdl-color--primary">
+						<span class="step-circle">3</span>
+					</div>
+				</div>
+				<div
+					class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+					<h5>Now register your Twilio account with this app</h5>
+					Click the link below to visit your Settings page. On the settings
+					page you will enter your Twilio account info. You need three pieces
+					of information ready, which can be found on your Twilio console
+					Dashboard:
+					<ul>
+						<li><b>ACCOUNT SID</b> - Available as the top item on your
+							Twilio account summary</li>
+						<li><b>AUTH TOKEN</b> - Available as the second item on your
+							Twilio account summary (need to click the lock icon to see your
+							Auth Token)</li>
+						<li><b>Phone number</b> - The number you just purchased, <span
+							class="important-instruction">in E.164 number format</span>,
+							which looks like this +18122016488 <b>not</b> like this (812)
+							201-6488.
+							<ul>
+								<li>More information about the E.164 number format can be
+									found <a
+									href="https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers"
+									target="_blank">here</a>.
+								</li>
+								<li>Additionally Twilio has a slick tool for figuring out
+									the E.164 number format for any number in the world <a
+									href="https://www.twilio.com/lookup" target="_blank">here</a>.
+								</li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mdl-card__actions">
+			<a href="/account-info" target="_blank" class="mdl-button">Visit
+				your Settings page</a>
+		</div>
+	</section>
+  <section
+    class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+      <div class="mdl-card__supporting-text">
+        <h4>Twilio Automatic responders</h4>
+        Additionally on your <a href="/account-info">settings page</a> you may have noticed the fields for automatic responses to phone calls and SMS messages.
+        Adding text to those fields will only do something if you setup the Webhook within your Twilio console.
+        Within the Twilio console for your phone number, set your auto voice and auto SMS responders as follows:
+        <ul>
+        <li>Voice Webhook ==>  http://yourusername-textmessenger.appspot.com/voice-auto-reply</li>
+        <li>Messaging Webhook ==> http://yourusername-textmessenger.appspot.com/sms-auto-reply</li>
+        </ul>
+        Use the link below to visit your phone number(s) console. Then click on the phone number and add the webhooks shown above (replacing yourusername as appropriate).
+      </div>
+      <div class="mdl-card__actions">
+          <a href="https://www.twilio.com/console/phone-numbers" target="_blank" class="mdl-button">Visit
+        your Twilio console for phone numbers</a>
+      </div>
+    </div>
+  </section>  
+	<section
+		class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>Contacts</h4>
+
+				You are done with the hard part (Twilio account setup). Now you need
+				enter a bunch of Contacts that might receive text messages. Use the
+				link below to visit the Contacts page (or the link at the top of any
+				page). When you add contact make sure to use the <span
+					class="important-instruction">E.164 number format</span> for all of
+				their phone numbers, which looks like this +18122016488 <b>not</b>
+				like this (812) 201-6488. See more info about about the E.164 number
+				format.
+
+			</div>
+			<div class="mdl-card__actions">
+				<a href="/contacts" class="mdl-button">Contacts</a>
+			</div>
+		</div>
+	</section>
+	<section
+		class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>Lists of Contacts</h4>
+				When you send text messages you will be able to send them to
+				individuals or everyone without making a Contact List. However if
+				you want to send a text to more than 1 person, but not everyone,
+				then you need to makea Contact List for that group. You can build
+				Contact Lists using the link below.
+			</div>
+			<div class="mdl-card__actions">
+				<a href="/lists" class="mdl-button">Contact Lists</a>
+			</div>
+		</div>
+	</section>
+	<section
+		class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>Text Messages Events</h4>
+				Finally you need to be able to schedule text message events. An
+				event is simply a time when the message will send, to whom, and text
+				for the message. Text Message Events can send right now or be
+				scheduled for a later date / time.
+			</div>
+			<div class="mdl-card__actions">
+				<a href="/text-messages" class="mdl-button">Text Message Events</a>
+			</div>
+		</div>
+	</section>
+  <br><br>
+</div>
+{% endblock %}

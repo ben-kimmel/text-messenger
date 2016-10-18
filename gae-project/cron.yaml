@@ -1,0 +1,4 @@
+cron:
+- description: Check to see if any scheduled messages need to be sent
+  url: /cron/check-message-events
+  schedule: every 24 hours

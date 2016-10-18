@@ -1,0 +1,54 @@
+{% extends "templates/base_page.html" %}
+
+{% block setActive %}
+<script>
+$("a.mdl-layout__tab[href='/lists']").addClass("is-active");
+</script>
+{% endblock %}
+
+{% block content %}
+  <div class="container fab-width-container">
+  	<button
+  		class="header-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
+  		id="add-list-btn" data-upgraded=",MaterialButton,MaterialRipple">
+  		<i class="material-icons" role="presentation">add</i><span
+  			class="visuallyhidden">Add</span>
+        <span class="mdl-button__ripple-container">
+        <span class="mdl-ripple is-animating" style="width: 160.392px; height: 160.392px;
+              transform: translate(-50%, -50%) translate(25px, 36px);"></span>
+        </span>
+  	</button>
+  </div>
+  <div class="container">
+    <h2 class="page-title">
+      Lists
+    </h2>
+    <hr>
+    <div class="mdl-grid">
+  	  {% for list in lists %}
+  	    {% include "templates/list_card.html" %}
+  	  {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block modals %}
+<!-- Create a new list dialog -->
+<dialog id='add-list-dialog' class="mdl-dialog">
+  <h4 class="mdl-dialog__title">Add List</h4>
+  <form action="/insert-list" method="POST">
+    <input name="list_entity_key" type="hidden" >
+	<div class="mdl-dialog__content">
+		<div id="name-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		  <input class="mdl-textfield__input" type="text" name="name">
+		  <label class="mdl-textfield__label" for="name">Name</label>
+		</div>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add</button>
+		<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent close-parent-dialog">Cancel</button>
+	</div>
+</form>
+</dialog>
+
+{% endblock %}

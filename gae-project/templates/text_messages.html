@@ -1,0 +1,66 @@
+{% extends "templates/base_page.html" %}
+
+{% block setActive %}
+<script>
+$("a.mdl-layout__tab[href='/text-messages']").addClass("is-active");
+</script>
+{% endblock %}
+
+{% block content %}
+  <div class="container fab-width-container">
+    <a href="/create-message" class="btn-floating btn-small red darken-2 pull-right">
+      <button
+        class="header-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
+        id="add-text-message-event" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons" role="presentation">add</i><span
+          class="visuallyhidden">Add</span> <span
+          class="mdl-button__ripple-container"><span
+          class="mdl-ripple is-animating"
+          style="width: 160.392px; height: 160.392px; transform: translate(-50%, -50%) translate(25px, 36px);"></span></span>
+      </button>
+    </a>
+  </div>
+  <div class="container">
+    <h2 class="page-title">Text Message Events</h2>
+    <hr>
+    {% with %}
+      {% set text_message_list = text_messages_pending %}
+      {% set title = "Text Messages Pending" %}
+      {% set isEditable = True %}
+      {% include "templates/text_message_table.html" %}
+    {% endwith %}
+    {% with %}
+      {% set text_message_list = text_messages_that_did_not_send %}
+      {% set title = "Text Messages that did not send" %}
+      {% set isEditable = True %}
+      {% include "templates/text_message_table.html" %}
+    {% endwith %}
+    {% with %}
+      {% set text_message_list = text_messages_sent %}
+      {% set title = "Text Messages Sent" %}
+      {% set isEditable = False %}
+      {% include "templates/text_message_table.html" %}
+    {% endwith %}
+  </div>
+{% endblock %}
+
+
+{% block modals %}
+<!-- Delete text message event confirmation dialog -->
+<dialog id='delete-text-message-event-dialog' class="mdl-dialog">
+  <h4 class="mdl-dialog__title">Delete Message</h4>
+  <form action="/delete-text-message-event" method="POST">
+  <input type="hidden" name="text_message_event_to_delete_key">
+  <div class="mdl-dialog__content">
+    <p class="delete-modal-body">
+      Are you sure you wish to delete this message?<br><br>
+      <b><span id="delete-text-message-event-body"></span></b>
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="submit" class="delete-btn mdl-button mdl-js-button mdl-button--raised">Delete message</button>
+    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent close-parent-dialog">Cancel</button>
+  </div>
+</form>
+</dialog>
+{% endblock %}

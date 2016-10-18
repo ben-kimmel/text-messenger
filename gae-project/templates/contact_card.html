@@ -1,0 +1,17 @@
+<div class="contact-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+	<div class="mdl-card mdl-shadow--2dp">
+		<div class="entity-key" style="display: none;">{{contact.key.urlsafe()}}</div>
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text"><span class="contact-nickname">{{ contact.nickname }}</span></h2>
+		</div>
+		<div class="mdl-card__supporting-text">
+			<span class="contact-name">
+			  <span class="contact-first-name">{{ contact.real_first_name }}</span>
+			  <span class="contact-last-name">{{ contact.real_last_name }}</span>
+			</span>
+			<div class="contact-phone">{{ contact.phone_number }}</div>
+			<div class="contact-email">{{ contact.email }}</div>
+			<div class="contact-other">{{ contact.other_info }}</div>
+		</div>
+	</div>
+</div>

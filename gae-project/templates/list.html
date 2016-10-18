@@ -1,0 +1,98 @@
+{% extends "templates/base_page.html" %}
+
+{% block setActive %}
+<script>
+// Optional, highlight the Lists item (even though this is an individual list)
+$("a.mdl-layout__tab[href='/lists']").addClass("is-active");
+</script>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  <form action="/update-list" method="POST">
+    <input name="contact_list_name" type="hidden" value="{{ contact_list.name }}">
+    <input name="contact_list_entity_key" type="hidden" value="{{contact_list.key.urlsafe()}}">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet">
+        <h2 class="page-title">
+          <span id="list-name">{{ contact_list.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type="button" id="edit-list-name-btn" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">edit</i>
+          </button>
+          <button type="button" id="delete-list-btn" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">delete</i>
+          </button>
+        </h2>
+        <input name="contact_keys_to_add" type="text" style="display: none;">
+        <input name="contact_keys_to_remove" type="text" style="display: none;">
+      </div>
+      <div class="mdl-cell mdl-cell--4-col  mdl-cell--4-col-tablet list-buttons">
+        <a href="/lists" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Back to all Lists
+        </a>
+        <button id="save-list-btn" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+    <p>Click on a contact to move them into or out of this list, then save your changes.</p>
+    <hr>
+    <h4>Contacts that are <b>in</b> this list</h4>
+    <div class="contacts-in-list">
+      <div class="mdl-grid">
+        {% for contact in contacts_in_list %}
+          {% include "templates/concise_contact_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <h4>Contacts that are <b>NOT</b> in this list</h4>
+    <div class="contacts-not-in-list">
+      <div class="mdl-grid">
+        {% for contact in contacts_not_in_list %}
+          {% include "templates/concise_contact_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modals %}
+<!-- Rename list dialog -->
+<dialog id='edit-list-name-dialog' class="mdl-dialog">
+  <h4 class="mdl-dialog__title">Edit list name</h4>
+    <input name="contact_entity_key" type="hidden" >
+    <div class="mdl-dialog__content">
+      <div id="name-field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" name="name" value="{{ contact_list.name }}">
+        <label class="mdl-textfield__label" for="name">Name</label>
+      </div>
+      <p class="sidenote">Note, changes won't be saved unless you hit the page Save button</p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button id="done-editing-list-name" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent close-parent-dialog">Done</button>
+    </div>
+</dialog>
+
+
+<!-- Delete list confirmation dialog -->
+<dialog id='delete-list-dialog' class="mdl-dialog">
+  <h4 class="mdl-dialog__title">Delete List</h4>
+  <form action="/delete-list" method="POST">
+    <input type="hidden" name="list_to_delete_key" value="{{contact_list.key.urlsafe()}}">
+    <div class="mdl-dialog__content">
+      <p class="delete-modal-body">
+        Are you sure you wish to delete <b><span
+          id="delete-list-name">{{contact_list.name}}</span></b>?<br>
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="submit" class="delete-btn mdl-button mdl-js-button mdl-button--raised">Delete list</button>
+      <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent close-parent-dialog">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+{% endblock %}
